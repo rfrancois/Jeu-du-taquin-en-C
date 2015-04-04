@@ -15,5 +15,6 @@ typedef struct plateform
 } Plateform;
 
 void set_plateform(Plateform* P);
+int can_move(int selected_i, int selected_y, Plateform* P);
  
 #endif

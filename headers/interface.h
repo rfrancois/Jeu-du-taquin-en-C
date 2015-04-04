@@ -17,6 +17,7 @@
 
 void create_window();
 void draw_split_image(int i, int y);
-int is_hover_square(int x, int y);
+int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y);
+
 
 #endif

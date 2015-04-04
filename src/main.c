@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 	set_plateform(&p);
 
 
-	int x, y;
+	int x, y, clicked_square_i, clicked_square_y;
 	MLV_Event event;
 	MLV_Button_state state;
 	MLV_Mouse_button mouse_button;
@@ -44,8 +44,10 @@ int main(int argc, char* argv[]) {
 		&x, &y,&mouse_button,&state         
 		);
 
-		if(mouse_button==MLV_BUTTON_LEFT && state == MLV_PRESSED) {
-			is_hover_square(x, y);
+		if(event==MLV_MOUSE_BUTTON && mouse_button==MLV_BUTTON_LEFT && state == MLV_PRESSED) {
+			if(is_hover_square(x, y, &clicked_square_i, &clicked_square_y)) {
+				printf("%d %d\n", clicked_square_i, clicked_square_y);
+			}
 		}
 
 	} while(!leave);
