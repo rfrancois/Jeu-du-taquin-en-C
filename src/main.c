@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 
 	mix_plateform(&p);
 
-	display_plateform(&p);
+	display_mixed_plateform(&p);
 
 	int x, y, clicked_square_i, clicked_square_y, square_move_i = -1, square_move_y = -1;
 	MLV_Event event;

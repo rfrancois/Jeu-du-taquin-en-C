@@ -2,7 +2,7 @@
 #define __ALGO__
 
 #define NB_COL 4
-#define NB_LIG 5
+#define NB_LIG 4
 
 typedef struct square {
 	int lig;
@@ -15,6 +15,7 @@ typedef struct plateform
 } Plateform;
 
 void set_plateform(Plateform* P);
+void display_mixed_plateform(Plateform* P);
 void mix_plateform(Plateform* P);
 int can_move(int selected_i, int selected_y, Plateform* P);
 int is_black_square(int selected_i, int selected_y, Plateform *p);

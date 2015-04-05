@@ -13,9 +13,22 @@ void set_plateform(Plateform* P) {
 		for(y=0; y<NB_COL; y++) {
 			((P->bloc))[i][y].lig = i;
 			((P->bloc))[i][y].col = y;
-			if(i!=NB_LIG-1 || y!=NB_COL-1) {
+			/*if(i!=NB_LIG-1 || y!=NB_COL-1) {
 				draw_split_image(i, y);
-			}
+			}*/
+		}
+	}
+}
+
+void display_mixed_plateform(Plateform* P) {
+	int i, y;
+	for(i=0; i<NB_LIG; i++) {
+		for(y=0; y<NB_COL; y++) {
+			((P->bloc))[i][y].lig = i;
+			((P->bloc))[i][y].col = y;
+			/*if(((P->bloc))[y][i].col!=NB_LIG-1 || ((P->bloc))[y][i].lig!=NB_COL-1) {*/
+				draw_moved_image(i, y, (P->bloc)[y][i].col, (P->bloc)[y][i].lig);
+			/*}*/
 		}
 	}
 
@@ -24,35 +37,63 @@ void set_plateform(Plateform* P) {
 
 void mix_plateform(Plateform* P) {
 	srand(getpid());
-	int black_i = NB_LIG-1, black_y = NB_COL-1, selected_i = black_i, selected_y = black_y, i;
+	int black_i = NB_LIG-1, black_y = NB_COL-1, selected_i = black_i, selected_y = black_y, i, active = 0;
 
 	for(i=0; i<50; i++) {
 		if(rand()%2) {
 			if(rand()%2) {
-				selected_i = black_i-1;
+				if(black_i <= 0) {
+					selected_i = black_i+1;
+				}
+				else {
+					selected_i = black_i-1;
+				}
 			}
 			else {
-				selected_i = black_i+1;
+				if(black_i >= NB_COL-1) {
+					selected_i = black_i-1;
+				}
+				else {
+					selected_i = black_i+1;
+				}
 			}
 		}
 		else {
 			if(rand()%2) {
-				selected_y = black_y-1;
+				if(black_y <= 0) {
+					selected_y = black_y+1;
+				}
+				else {
+					selected_y = black_y-1;
+				}
+
 			}
 			else {
-				selected_y = black_y+1;
+				if(black_y>=NB_LIG-1) {
+					selected_y = black_y-1;
+				}
+				else {
+					selected_y = black_y+1;
+				}
 			}		
 		}
 		if(can_move(selected_i, selected_y, P)) {
-			printf("%d\n", i);
+			active++;
+			/*printf("%d\n", i);*/
 			move_square(selected_i, selected_y, black_i, black_y, P);
 			black_i = selected_i;
 			black_y = selected_y;
+			printf("%d %d\n", black_y, black_i);
+			/*if(active==1) {
+				((P->bloc))[NB_COL-1][NB_LIG-1].lig = black_i;
+				((P->bloc))[NB_COL-1][NB_LIG-1].col = black_y;
+			}*/
 		}
 	}
+	display_plateform(P);
 }
 
-/* CHeck if square can be moved */
+/* Check if square can be moved */
 int can_move(int selected_i, int selected_y, Plateform* P) {	
 	if(
 		(((P->bloc))[selected_y][selected_i-1].lig==NB_LIG-1 && ((P->bloc))[selected_y][selected_i-1].col==NB_COL-1) ||
