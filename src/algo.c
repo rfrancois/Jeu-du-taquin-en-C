@@ -33,7 +33,7 @@ void mix_plateform(Plateform* P) {
 	srand(getpid());
 	int black_i = NB_LIG-1, black_y = NB_COL-1, selected_i = black_i, selected_y = black_y, i, active = 0;
 
-	for(i=0; i<20; i++) {
+	for(i=0; i<10; i++) {
 		if(rand()%2) {
 			if(rand()%2) {
 				if(black_i <= 0) {

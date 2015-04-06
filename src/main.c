@@ -112,5 +112,7 @@ int main(int argc, char* argv[]) {
 		
 	} while(!leave);
 
+	MLV_free_window();
+
 	return 0;
 }
