@@ -19,7 +19,9 @@ void create_window();
 void draw_split_image(int i, int y);
 void draw_moved_image(int position_i, int position_y, int grid_i, int grid_y);
 void erase_image(int i, int y);
+void draw_hover_effect(int i, int y);
 int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y);
-
+int is_hover_specific_square(int mouse_x, int mouse_y, int i, int y);
+void draw_win_screen();
 
 #endif

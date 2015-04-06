@@ -26,6 +26,11 @@ void erase_image(int i, int y) {
 	MLV_draw_filled_rectangle(TOTAL_SQUARE_SIZE_LIG*y, TOTAL_SQUARE_SIZE_COL*i, SQUARE_SIZE_LIG, SQUARE_SIZE_COL, MLV_COLOR_BLACK);
 }
 
+void draw_hover_effect(int i, int y) {
+	MLV_draw_filled_rectangle(TOTAL_SQUARE_SIZE_LIG*y, TOTAL_SQUARE_SIZE_COL*i, SQUARE_SIZE_LIG, SQUARE_SIZE_COL, MLV_convert_rgba_to_color(0, 0, 0, 50));	
+	MLV_actualise_window();
+}
+
 /* Mouse is it on one of the square ? */
 int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y) { 
 	int i, y;
@@ -44,6 +49,33 @@ int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y) {
 		}
 	}	
 	return 0;
+}
+
+int is_hover_specific_square(int mouse_x, int mouse_y, int i, int y) { 
+	if(
+		mouse_y>=TOTAL_SQUARE_SIZE_COL*i && 
+		mouse_y<= TOTAL_SQUARE_SIZE_COL*i+SQUARE_SIZE_COL && 
+		mouse_x>=TOTAL_SQUARE_SIZE_LIG*y &&
+		mouse_x<=TOTAL_SQUARE_SIZE_LIG*y+SQUARE_SIZE_LIG
+	) {
+		return 1;
+	}
+	return 0;
+}
+
+void draw_win_screen() {
+	/* Calculate center */
+	int width, height;
+	MLV_get_image_size(IMAGE, &width, &height);
+	width = SCREEN_SIZE_LIG/2-width/2;
+	height = SCREEN_SIZE_COL/2-height/2;
+	/* Draw picture */
+	MLV_clear_window( MLV_COLOR_BLACK );
+	MLV_draw_image(IMAGE, width, height);
+	/* Draw text */
+	char* libel = "You won !";
+	MLV_draw_text(20, 20, libel, MLV_COLOR_BLACK);
+	MLV_actualise_window();
 }
 
 /*MLV_draw_image(igm, 0, 0 );*/
