@@ -20,6 +20,7 @@ void mix_plateform(Plateform* P);
 int compare_plateform(Plateform* p1, Plateform* p2);
 int can_move(int selected_i, int selected_y, Plateform* P);
 int is_black_square(int selected_i, int selected_y, Plateform *p);
+void find_black_square(Plateform *P, int* selected_i, int* selected_y);
 void move_square(int selected_i, int selected_y, int black_i, int black_y, Plateform *P);
 void display_plateform(Plateform* P);
  

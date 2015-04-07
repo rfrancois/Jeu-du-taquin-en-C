@@ -54,45 +54,41 @@ int main(int argc, char* argv[]) {
 		NULL, NULL,
 		&x, &y,&mouse_button,&state         
 		);
-
-		if(event==MLV_MOUSE_BUTTON && mouse_button==MLV_BUTTON_LEFT && state == MLV_PRESSED) {
-			/* If user clicks on a square */
-			if(is_hover_square(x, y, &clicked_square_i, &clicked_square_y)) {
-				/* If user clicks on black square to move another square */
-				if(square_move_i != -1 && is_black_square(clicked_square_i, clicked_square_y, &p)) {
-					/* Update positions in plateform structure */
-					move_square(square_move_i, square_move_y, clicked_square_i, clicked_square_y, &p);
-					/* PLace splitted picture at the new position */
-					draw_moved_image(clicked_square_i, clicked_square_y, (p.bloc)[clicked_square_y][clicked_square_i].col, (p.bloc)[clicked_square_y][clicked_square_i].lig);
-					/* Erase picture now she's on another place */
-					erase_image(square_move_i, square_move_y);
-					MLV_actualise_window();
-					/*display_plateform(&p);*/
-					square_move_i = -1;
-					square_move_y = -1;
-					if(compare_plateform(&p, &final)) {
-						down = 1;
-					}
-				}
-				/* If user clicks on a square which is allowed to move */
-				else if(can_move(clicked_square_i, clicked_square_y, &p)) {
-					square_move_i = clicked_square_i;
-					square_move_y = clicked_square_y;
-				}
+		
+		/* If user clicks on a square which is allowed to move */
+		if(event==MLV_MOUSE_BUTTON && mouse_button==MLV_BUTTON_LEFT && state == MLV_PRESSED && is_hover_square(x, y, &clicked_square_i, &clicked_square_y) && can_move(clicked_square_i, clicked_square_y, &p) && !is_black_square(clicked_square_i, clicked_square_y, &p)) {			
+			/* Set black square's position */
+			find_black_square(&p, &square_move_i, &square_move_y);
+			/* Update positions in plateform structure */
+			move_square(clicked_square_i, clicked_square_y, square_move_i, square_move_y, &p);
+			/* Place splitted picture at the new position */
+			draw_moved_image(square_move_i, square_move_y, (p.bloc)[square_move_y][square_move_i].col, (p.bloc)[square_move_y][square_move_i].lig);
+			/* Erase picture now it's on another place */
+			erase_image(clicked_square_i, clicked_square_y);
+			MLV_actualise_window();
+			if(compare_plateform(&p, &final)) {
+				down = 1;
 			}
 		}
+		/* If mouse's user passes on a square, do a hover effect */
 		else if(event == MLV_MOUSE_MOTION || event == MLV_NONE) {
+			/* If we were not on a square before */
 			if(hover == 0 && is_hover_square(x, y, &clicked_square_i, &clicked_square_y) && !is_black_square(clicked_square_i, clicked_square_y, &p)) {
 				hover = 1;
 				tmp_x = clicked_square_i;
 				tmp_y = clicked_square_y;
 				draw_hover_effect(clicked_square_i, clicked_square_y);
 			}
+			/* If mouse leaved a square */
 			else if (hover == 1 && !is_hover_specific_square(x, y, tmp_x, tmp_y)) {
 				hover = 2;
-				draw_moved_image(tmp_x, tmp_y, (p.bloc)[tmp_y][tmp_x].col, (p.bloc)[tmp_y][tmp_x].lig);
-				MLV_actualise_window();				
+				/* Don't draw a picture if it's black square */
+				if(!is_black_square(tmp_x, tmp_y, &p)) {
+					draw_moved_image(tmp_x, tmp_y, (p.bloc)[tmp_y][tmp_x].col, (p.bloc)[tmp_y][tmp_x].lig);
+					MLV_actualise_window();
+				}				
 			}
+			/* Waiting for the mouse after we leaved a square */
 			else if(hover == 2) {
 				hover = 0;
 			}
@@ -109,7 +105,7 @@ int main(int argc, char* argv[]) {
  	draw_win_screen();
 
 	do {
-		
+		/* Do nothing until user leaves the game */
 	} while(!leave);
 
 	MLV_free_window();

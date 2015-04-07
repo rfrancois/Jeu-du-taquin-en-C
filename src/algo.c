@@ -33,7 +33,7 @@ void mix_plateform(Plateform* P) {
 	srand(getpid());
 	int black_i = NB_LIG-1, black_y = NB_COL-1, selected_i = black_i, selected_y = black_y, i, active = 0;
 
-	for(i=0; i<10; i++) {
+	for(i=0; i<120; i++) {
 		if(rand()%2) {
 			if(rand()%2) {
 				if(black_i <= 0) {
@@ -119,6 +119,19 @@ int is_black_square(int selected_i, int selected_y, Plateform *P) {
 		return 1;
 	}
 	return 0;
+}
+
+void find_black_square(Plateform *P, int* selected_i, int* selected_y) {
+	int i, y;
+	for(i=0; i<NB_LIG; i++) {
+		for(y=0; y<NB_COL; y++) {
+			if((P->bloc)[i][y].lig == NB_LIG-1 && (P->bloc)[i][y].col == NB_COL-1) {
+				*selected_i = y;
+				*selected_y = i;
+				return ;
+			}
+		}
+	}	
 }
 
 /* Change positions of 2 squares */
