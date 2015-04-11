@@ -10,7 +10,7 @@
 #include <string.h>
 #include "interface.h"
 #include "algo.h"
- #include <MLV/MLV_all.h>
+#include <MLV/MLV_all.h>
 
 /* Global variable to know when to leave the program */
 int leave = 0;
@@ -23,6 +23,8 @@ void exit_function(void* data){
 
 int main(int argc, char* argv[]) {
 
+	/* Initialize the game */
+
 	create_window();
 
 	Plateform p, final;
@@ -34,6 +36,8 @@ int main(int argc, char* argv[]) {
 
 	display_mixed_plateform(&p);
 	MLV_actualise_window();
+
+	/*display_plateform(&p);*/
 
 	int x, y, clicked_square_i, clicked_square_y, square_move_i = -1, square_move_y = -1, down = 0, hover = 0, tmp_x, tmp_y;
 	MLV_Event event;
@@ -61,6 +65,7 @@ int main(int argc, char* argv[]) {
 			find_black_square(&p, &square_move_i, &square_move_y);
 			/* Update positions in plateform structure */
 			move_square(clicked_square_i, clicked_square_y, square_move_i, square_move_y, &p);
+			/*display_plateform(&p);*/
 			/* Place splitted picture at the new position */
 			draw_moved_image(square_move_i, square_move_y, (p.bloc)[square_move_y][square_move_i].col, (p.bloc)[square_move_y][square_move_i].lig);
 			/* Erase picture now it's on another place */

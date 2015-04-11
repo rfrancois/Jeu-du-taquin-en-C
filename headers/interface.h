@@ -3,7 +3,7 @@
 
 /* Screen dimension */
 #define GLOBAL_SIZE 512
-#define PADDING_SIZE 10
+#define PADDING_SIZE 5
 /* Columns */
 #define SCREEN_SIZE_COL (GLOBAL_SIZE+PADDING_SIZE*(NB_COL-1))
 #define SQUARE_SIZE_COL (GLOBAL_SIZE/NB_COL)

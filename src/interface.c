@@ -31,7 +31,7 @@ void draw_hover_effect(int i, int y) {
 	MLV_actualise_window();
 }
 
-/* Mouse is it on one of the square ? */
+/* Mouse is it on one of all the square ? */
 int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y) { 
 	int i, y;
 	for(i=0; i<NB_COL; i++) {
@@ -51,6 +51,7 @@ int is_hover_square(int mouse_x, int mouse_y, int* result_i, int* result_y) {
 	return 0;
 }
 
+/* Check if mouse is on a square which position is known */
 int is_hover_specific_square(int mouse_x, int mouse_y, int i, int y) { 
 	if(
 		mouse_y>=TOTAL_SQUARE_SIZE_COL*i && 
@@ -63,6 +64,7 @@ int is_hover_specific_square(int mouse_x, int mouse_y, int i, int y) {
 	return 0;
 }
 
+/* Draw final screen */
 void draw_win_screen() {
 	/* Calculate center */
 	int width, height;
@@ -77,9 +79,3 @@ void draw_win_screen() {
 	MLV_draw_text(20, 20, libel, MLV_COLOR_BLACK);
 	MLV_actualise_window();
 }
-
-/*MLV_draw_image(igm, 0, 0 );*/
-
-/*MLV_draw_partial_image()*/
-
-/*MLV_draw_image_on_image*/
