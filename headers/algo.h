@@ -2,16 +2,16 @@
 #define __ALGO__
 
 #define NB_COL 4
-#define NB_LIG 4	
+#define NB_LIG 4   
 
 typedef struct square {
-	int lig;
-	int col;
+   int lig;
+   int col;
 } Square;
 
 typedef struct plateform
 {
-	Square bloc[NB_COL][NB_LIG];
+   Square bloc[NB_COL][NB_LIG];
 } Plateform;
 
 void set_plateform(Plateform* P);
